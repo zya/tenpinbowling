@@ -17,7 +17,7 @@ function Player(name){
 		}else{
 			//lastframe
 			that.frames[i] = new Frame();
-			that.frames[i].isLastFrame = true;
+			that.frames[i].lastFrame();
 
 		}
 
@@ -95,14 +95,19 @@ function Frame(){
 
 	this.ball1 = 0;
 	this.ball2 = 0;
-	this.ball3 = 0;
 	this.score = 0;
-
 	this.isStrike = false;
 	this.isSpare = false;
 	this.isLastFrame = false;
 
 }
+
+Frame.prototype.lastFrame = function(){
+
+	this.isLastFrame = true;
+	this.ball3 = 0;
+
+};
 
 
 var player = new Player('Ehsan');
