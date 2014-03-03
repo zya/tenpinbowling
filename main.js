@@ -67,7 +67,8 @@ Player.prototype.getScore = function(currentFrame){
 	}
 
 	//check for invalid entries - if the sum is more than 10
-	if( (this.frames[currentFrame].ball1 + this.frames[currentFrame].ball2) > 10 ){
+	var sum = this.frames[currentFrame].ball1 + this.frames[currentFrame].ball2;
+	if( sum > 10 || isNaN(sum) ){
 
 		console.log('Inavlid Entry');
 		that.frames[currentFrame].ball1 = 0;
@@ -132,7 +133,8 @@ Player.prototype.getLastFrameScore = function(currentFrame){
 	}
 
 	//check for invalid entries - if the sum is more than 10
-	if( (this.frames[currentFrame].ball1 + this.frames[currentFrame].ball2 + this.frames[currentFrame].ball3) > 30 ){
+	var sum = this.frames[currentFrame].ball1 + this.frames[currentFrame].ball2 + this.frames[currentFrame].ball3;
+	if( sum > 30 || isNaN(sum) ){
 
 		console.log('Inavlid Entry');
 		that.frames[currentFrame].ball1 = 0;
@@ -195,7 +197,6 @@ Player.prototype.calculateScore = function(){
 			
 		}
 		
-
 	}
 
 };
