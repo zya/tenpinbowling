@@ -66,6 +66,16 @@ Player.prototype.getScore = function(currentFrame){
 
 	}
 
+	//check for invalid entries - if the sum is more than 10
+	if( (this.frames[currentFrame].ball1 + this.frames[currentFrame].ball2) > 10 ){
+
+		console.log('Inavlid Entry');
+		that.frames[currentFrame].ball1 = 0;
+		that.frames[currentFrame].ball2 = 0;
+		//repeat the process
+		that.getScore(currentFrame);
+	}
+
 };
 
 //a function for the last frame
@@ -83,6 +93,7 @@ Player.prototype.getLastFrameScore = function(currentFrame){
 		//get two bonus balls
 		message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 2 - Bonus"; //prepare the message
 		that.frames[currentFrame].ball2 = parseInt(prompt(message),10);
+		
 		message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 3 - Bonus"; //prepare the message
 		that.frames[currentFrame].ball3 = parseInt(prompt(message),10);
 
@@ -118,6 +129,16 @@ Player.prototype.getLastFrameScore = function(currentFrame){
 
 		}
 
+	}
+
+	//check for invalid entries - if the sum is more than 10
+	if( (this.frames[currentFrame].ball1 + this.frames[currentFrame].ball2 + this.frames[currentFrame].ball3) > 30 ){
+
+		console.log('Inavlid Entry');
+		that.frames[currentFrame].ball1 = 0;
+		that.frames[currentFrame].ball2 = 0;
+		//repeat the process
+		that.getScore(currentFrame);
 	}
 
 };
@@ -193,7 +214,7 @@ function Frame(){
 }
 
 //function that sets the frame as the last frame and adds another ball slot
-Frame.prototype.lastFrame = function(){
+Frame.prototype.setLastFrame = function(){
 
 	//adds a third ball to the last frame
 	this.isLastFrame = true;
@@ -212,8 +233,9 @@ function Game(players){
 
 //start method which repeates itself till the game is over
 Game.prototype.start = function(){
-	var that = this;
 	
+	var that = this;
+
 	//if it is not the last frame
 	if(this.currentFrame < 9){
 
@@ -236,7 +258,7 @@ Game.prototype.start = function(){
 		//loop through and get the score for each player and each round
 		for(var j = 0; j < this.players.length; j++){
 
-			that.players[j].frames[that.currentFrame].lastFrame(); // sets is Last Frame
+			that.players[j].frames[that.currentFrame].setLastFrame(); // sets as Last Frame
 			that.players[j].getLastFrameScore(that.currentFrame); //get the score
 			that.players[j].calculateScore(); // calculate the score
 
