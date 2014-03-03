@@ -56,6 +56,11 @@ Player.prototype.getScore = function(currentFrame){
 			
 			//its neighter a spare nor a strike
 			//you can check for a miss
+			if( (that.frames[currentFrame].ball1 + that.frames[currentFrame].ball2) === 0){
+
+				console.log('Missed both balls - OPEN FRAME');
+
+			}
 
 		}
 
@@ -82,6 +87,13 @@ Player.prototype.getLastFrameScore = function(currentFrame){
 		message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 3 - Bonus"; //prepare the message
 		that.frames[currentFrame].ball3 = parseInt(prompt(message));
 
+		//check for striking out condition
+		if( that.frames[currentFrame].ball2 === 10 && that.frames[currentFrame].ball1 === 10 ){
+
+			console.log('Striking OUT');
+
+		}
+
 	}else{
 
 		message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 2"; //prepare the message
@@ -94,8 +106,14 @@ Player.prototype.getLastFrameScore = function(currentFrame){
 			console.log('SPARE');
 
 		}else{
+			
 			//its neighter a spare nor a strike
 			//you can check for a miss
+			if( (that.frames[currentFrame].ball1 + that.frames[currentFrame].ball2) === 0){
+
+				console.log('OPEN FRAME');
+
+			}
 
 		}
 
@@ -261,7 +279,7 @@ Game.prototype.printScoreBoard = function(){
 		};
 	}
 
-	//use console.table for nice presentation
+	//use console.table for nice presentation of the score board
 	console.table(this.scoreBoard);
 
 };
@@ -276,7 +294,7 @@ window.onload = function(){
 	var numberOfPlayers = parseInt(prompt('Please Enter the Number Players')); //get the number of players
 
 	//check if itsa valid entry
-	if(numberOfPlayers > 6 || numberOfPlayers =< 0 || isNaN(numberOfPlayers)){
+	if(numberOfPlayers > 6 || numberOfPlayers <= 0 || isNaN(numberOfPlayers)){
 
 		numberOfPlayers = parseInt(prompt('Max number of players is 6, Please Enter a Valid Number Between 1 and 6'));
 
