@@ -53,6 +53,7 @@ Player.prototype.getScore = function(currentFrame){
 			console.log('SPARE');
 
 		}else{
+			
 			//its neighter a spare nor a strike
 			//you can check for a miss
 
@@ -147,7 +148,6 @@ Player.prototype.calculateScore = function(){
 			
 		}else{
 
-			console.log('its lat frame in calculation');
 			//its the last frame which in any case will be calculated by adding the three - if all are not strikes will be added by 0
 			that.frames[i].score = that.frames[i].ball1 + that.frames[i].ball2 + that.frames[i].ball3;
 			that.score += that.frames[i].score;
@@ -175,6 +175,7 @@ function Frame(){
 //function that sets the frame as the last frame and adds another ball slot
 Frame.prototype.lastFrame = function(){
 
+	//adds a third ball to the last frame
 	this.isLastFrame = true;
 	this.ball3 = 0;
 
@@ -183,8 +184,11 @@ Frame.prototype.lastFrame = function(){
 //GAME CLASS
 function Game(players){
 
+	var that = this;
 	this.players = players;
 	this.currentFrame = 0;
+	this.scoreBoard = [];
+	
 
 }
 
@@ -207,9 +211,9 @@ Game.prototype.start = function(){
 		that.start(); //loop
 
 	}else{
+		
 		//its the last frame
 		//run the special getter function
-		
 		//loop through and get the score for each player and each round
 		for(var i = 0; i < this.players.length; i++){
 
@@ -219,8 +223,8 @@ Game.prototype.start = function(){
 			that.players[i].calculateScore();
 
 		}
-		console.log(that.players);
-		that.finish();
+
+		that.finish(); //finish the game
 	}
 };
 
@@ -228,42 +232,57 @@ Game.prototype.finish = function(){
 
 	//game finished - print the score board
 	console.log('finished');
+	this.printScoreBoard();
+
+};
+
+//generates and pritns a scoreboard
+Game.prototype.printScoreBoard = function(){
+
+	var that = this;
+
+	for(var i = 0; i < this.players.length; i++){
+
+		//create the slot in the scoreboard
+		//each slot is a an object that has name and scores for each frame and the final score
+		that.scoreBoard[i] = {
+			name: that.players[i].name,
+			frame_1: that.players[i].frames[0].score,
+			frame_2: that.players[i].frames[1].score,
+			frame_3: that.players[i].frames[2].score,
+			frame_4: that.players[i].frames[3].score,
+			frame_5: that.players[i].frames[4].score,
+			frame_6: that.players[i].frames[5].score,
+			frame_7: that.players[i].frames[6].score,
+			frame_8: that.players[i].frames[7].score,
+			frame_9: that.players[i].frames[8].score,
+			frame_10: that.players[i].frames[9].score,
+			score: that.players[i].score
+		};
+	}
+
+	//use console.table for nice presentation
+	console.table(this.scoreBoard);
+
 };
 
 
-/*
-var player = new Player('Ehsan');
-
-for(var i = 0; i < player.frames.length; i++){
-
-	if(player.frames[i].isLastFrame){
-		
-		player.frames[i].ball1 = 10;
-		player.frames[i].ball2 = 10;
-		player.frames[i].ball3 = 10;
-		
-
-	}else{
-
-		player.frames[i].ball1 = 10;
-		player.frames[i].isStrike = true;
-
-	}
-	
-}
-
-player.calculateScore();
-console.log(player.frames);
-console.log(player.score);
-*/
 
 
-
+//Onload Event
 window.onload = function(){
 
-	var players = [];
-	var numberOfPlayers = parseInt(prompt('Please Enter the Number Players'));
+	var players = []; //array to hold player objects
+	var numberOfPlayers = parseInt(prompt('Please Enter the Number Players')); //get the number of players
 
+	//check if itsa valid entry
+	if(numberOfPlayers > 6 || numberOfPlayers =< 0 || isNaN(numberOfPlayers)){
+
+		numberOfPlayers = parseInt(prompt('Max number of players is 6, Please Enter a Valid Number Between 1 and 6'));
+
+	}
+
+	//create new instances of Player class and set the name
 	for(var i = 0; i < numberOfPlayers; i++){
 
 		var name = prompt('Enter Player '+ (i+1) + "'s Name:");
@@ -271,9 +290,8 @@ window.onload = function(){
 
 	}
 
+	//create a new Game object 
 	var game = new Game(players);
-	game.start();
-	console.log(players);
-
+	game.start(); //start the game
 
 };
