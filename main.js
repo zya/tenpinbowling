@@ -8,14 +8,14 @@ function Player(name){
 	this.score = 0; // score
 
 	//create the frames array - and populate it with zeros
-	for(var i = 0; i < this.numberOfFrames; i++){
+	for (var i = 0; i < this.numberOfFrames; i++){
 
-		if(i < 9){
+		if (i < 9){
 
 			that.frames[i] = new Frame();
 
 		//10th frame is a unique type for frame with one extra slot - for possible bonus shots
-		}else{
+		} else {
 
 			//lastframe
 			that.frames[i] = new Frame();
@@ -33,30 +33,30 @@ Player.prototype.getScore = function(currentFrame){
 	var that = this; //for handling scope issues
 
 	var message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 1"; //prepare the message
-	this.frames[currentFrame].ball1 = parseInt(prompt(message),10); //get the ball1 score
+	this.frames[currentFrame].ball1 = parseInt(prompt(message), 10); //get the ball1 score
 
 	//check if it is strike
-	if(this.frames[currentFrame].ball1 === 10){
+	if (this.frames[currentFrame].ball1 === 10){
 
 		that.frames[currentFrame].isStrike = true; //set strike to true
 		console.log('STRIKE');
 
-	}else{
+	} else {
 
 		message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 2"; //prepare the message
-		that.frames[currentFrame].ball2 = parseInt(prompt(message),10);
+		that.frames[currentFrame].ball2 = parseInt(prompt(message), 10);
 
 		//check if its a spare
-		if( (that.frames[currentFrame].ball1 + that.frames[currentFrame].ball2) === 10 ){
+		if ( (that.frames[currentFrame].ball1 + that.frames[currentFrame].ball2) === 10 ){
 
 			that.frames[currentFrame].isSpare = true; //set spare to true
 			console.log('SPARE');
 
-		}else{
+		} else {
 			
 			//its neighter a spare nor a strike
 			//you can check for a miss
-			if( (that.frames[currentFrame].ball1 + that.frames[currentFrame].ball2) === 0){
+			if ( (that.frames[currentFrame].ball1 + that.frames[currentFrame].ball2) === 0){
 
 				console.log('Missed both balls - OPEN FRAME');
 
@@ -68,7 +68,7 @@ Player.prototype.getScore = function(currentFrame){
 
 	//check for invalid entries - if the sum is more than 10
 	var sum = this.frames[currentFrame].ball1 + this.frames[currentFrame].ball2;
-	if( sum > 10 || isNaN(sum) ){
+	if ( sum > 10 || isNaN(sum) ){
 
 		console.log('Inavlid Entry');
 		that.frames[currentFrame].ball1 = 0;
@@ -88,41 +88,41 @@ Player.prototype.getLastFrameScore = function(currentFrame){
 	this.frames[currentFrame].ball1 = parseInt(prompt(message),10);
 
 	//check if it is strike
-	if(this.frames[currentFrame].ball1 === 10){
+	if (this.frames[currentFrame].ball1 === 10){
 
 		console.log('STRIKE + 2 Bonus Shots');
 		//get two bonus balls
 		message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 2 - Bonus"; //prepare the message
-		that.frames[currentFrame].ball2 = parseInt(prompt(message),10);
+		that.frames[currentFrame].ball2 = parseInt(prompt(message), 10);
 		
 		message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 3 - Bonus"; //prepare the message
-		that.frames[currentFrame].ball3 = parseInt(prompt(message),10);
+		that.frames[currentFrame].ball3 = parseInt(prompt(message), 10);
 
 		//check for striking out condition
-		if( that.frames[currentFrame].ball2 === 10 && that.frames[currentFrame].ball1 === 10 ){
+		if ( that.frames[currentFrame].ball2 === 10 && that.frames[currentFrame].ball1 === 10 ){
 
 			console.log('Striking OUT');
 
 		}
 
-	}else{
+	} else {
 
 		message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 2"; //prepare the message
 		that.frames[currentFrame].ball2 = parseInt(prompt(message),10);
 
 		//check if its a spare
-		if( (that.frames[currentFrame].ball1 + that.frames[currentFrame].ball2) === 10 ){
+		if ( (that.frames[currentFrame].ball1 + that.frames[currentFrame].ball2) === 10 ){
 
 			// if it is spare give a bonus of one extra ball
 			console.log('SPARE');
 			message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 3 - Bonus"; //prepare the message
 			that.frames[currentFrame].ball3 = parseInt(prompt(message),10);
 
-		}else{
+		} else {
 			
 			//its neighter a spare nor a strike
 			//you can check for a miss
-			if( (that.frames[currentFrame].ball1 + that.frames[currentFrame].ball2) === 0){
+			if ( (that.frames[currentFrame].ball1 + that.frames[currentFrame].ball2) === 0){
 
 				console.log('OPEN FRAME');
 
@@ -134,7 +134,7 @@ Player.prototype.getLastFrameScore = function(currentFrame){
 
 	//check for invalid entries - if the sum is more than 10
 	var sum = this.frames[currentFrame].ball1 + this.frames[currentFrame].ball2 + this.frames[currentFrame].ball3;
-	if( sum > 30 || isNaN(sum) ){
+	if ( sum > 30 || isNaN(sum) ){
 
 		console.log('Inavlid Entry');
 		that.frames[currentFrame].ball1 = 0;
@@ -150,22 +150,22 @@ Player.prototype.calculateScore = function(){
 
 	this.score = 0; //reset the score
 	var that = this;
-	for(var i = 0; i < this.frames.length; i++){
+	for (var i = 0; i < this.frames.length; i++) {
 
 		//check if the current frame is last or not
-		if(!that.frames[i].isLastFrame){
+		if (!that.frames[i].isLastFrame){
 
 			//checks if current frame is a strike
-			if(that.frames[i].isStrike){
+			if (that.frames[i].isStrike){
 
 				//checks if the next frame is also a strike
-				if(that.frames[i+1].isStrike){
+				if (that.frames[i+1].isStrike){
 
 					//calculates the score by adding the score of next two balls
 					that.frames[i].score = that.frames[i].ball1 + that.frames[i+1].ball1 + that.frames[i+2].ball1;
 					that.score += that.frames[i].score;
 
-				}else{
+				} else {
 					
 					//calculates the score by adding the score of next two balls
 					that.frames[i].score = that.frames[i].ball1 + that.frames[i+1].ball1 + that.frames[i+1].ball2;
@@ -174,13 +174,13 @@ Player.prototype.calculateScore = function(){
 				}
 				
 			//check if the current frame is a spare
-			}else if(that.frames[i].isSpare){
+			} else if (that.frames[i].isSpare){
 
 				//calculate the score by adding the score of the next one ball
 				that.frames[i].score = that.frames[i].ball1 + that.frames[i].ball2 + that.frames[i+1].ball1;
 				that.score += that.frames[i].score;
 
-			}else{
+			} else {
 
 				//calculate the score by just adding the two balls
 				that.frames[i].score = that.frames[i].ball1 + that.frames[i].ball2;
@@ -238,10 +238,10 @@ Game.prototype.start = function(){
 	var that = this;
 
 	//if it is not the last frame
-	if(this.currentFrame < 9){
+	if (this.currentFrame < 9){
 
 		//loop through and get the score for each player and each round
-		for(var i = 0; i < this.players.length; i++){
+		for (var i = 0; i < this.players.length; i++){
 
 			that.players[i].getScore(that.currentFrame); //get the score
 			that.players[i].calculateScore(); //calculate the overall score
@@ -252,19 +252,19 @@ Game.prototype.start = function(){
 		that.currentFrame++;
 		that.start(); //loop
 
-	}else{
+	} else {
 		
 		//its the last frame
 		//run the special getter function
 		//loop through and get the score for each player and each round
-		for(var j = 0; j < this.players.length; j++){
+		for (var j = 0; j < this.players.length; j++){
 
 			that.players[j].frames[that.currentFrame].setLastFrame(); // sets as Last Frame
 			that.players[j].getLastFrameScore(that.currentFrame); //get the score
 			that.players[j].calculateScore(); // calculate the score
 
 			//check for perfect game condition
-			if(that.players[j].score === 300){
+			if (that.players[j].score === 300){
 
 				console.log('PERFECT GAME');
 
@@ -289,7 +289,7 @@ Game.prototype.printScoreBoard = function(){
 
 	var that = this;
 
-	for(var i = 0; i < this.players.length; i++){
+	for (var i = 0; i < this.players.length; i++){
 
 		//create the slot in the scoreboard
 		//each slot is a an object that has name and scores for each frame and the final score
@@ -320,19 +320,19 @@ Game.prototype.printScoreBoard = function(){
 window.onload = function(){
 
 	var players = []; //array to hold player objects
-	var numberOfPlayers = parseInt(prompt('Please Enter the Number Players'),10); //get the number of players
+	var numberOfPlayers = parseInt(prompt('Please Enter the Number Players'), 10); //get the number of players
 
 	//check if itsa valid entry
-	if(numberOfPlayers > 6 || numberOfPlayers <= 0 || isNaN(numberOfPlayers)){
+	if (numberOfPlayers > 6 || numberOfPlayers <= 0 || isNaN(numberOfPlayers)){
 
-		numberOfPlayers = parseInt(prompt('Max number of players is 6, Please Enter a Valid Number Between 1 and 6'),10);
+		numberOfPlayers = parseInt(prompt('Max number of players is 6, Please Enter a Valid Number Between 1 and 6'), 10);
 
 	}
 
 	//create new instances of Player class and set the name
-	for(var i = 0; i < numberOfPlayers; i++){
+	for (var i = 0; i < numberOfPlayers; i++){
 
-		var name = prompt('Enter Player '+ (i+1) + "'s Name:");
+		var name = prompt('Enter Player '+ (i + 1) + "'s Name:");
 		players[i] = new Player(name);
 
 	}
