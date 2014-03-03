@@ -25,7 +25,6 @@ function Player(name){
 
 	}
 
-
 }
 
 //function that gets the input and sets the frame
@@ -34,7 +33,7 @@ Player.prototype.getScore = function(currentFrame){
 	var that = this; //for handling scope issues
 
 	var message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 1"; //prepare the message
-	this.frames[currentFrame].ball1 = parseInt(prompt(message)); //get the ball1 score
+	this.frames[currentFrame].ball1 = parseInt(prompt(message),10); //get the ball1 score
 
 	//check if it is strike
 	if(this.frames[currentFrame].ball1 === 10){
@@ -45,7 +44,7 @@ Player.prototype.getScore = function(currentFrame){
 	}else{
 
 		message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 2"; //prepare the message
-		that.frames[currentFrame].ball2 = parseInt(prompt(message));
+		that.frames[currentFrame].ball2 = parseInt(prompt(message),10);
 
 		//check if its a spare
 		if( (that.frames[currentFrame].ball1 + that.frames[currentFrame].ball2) === 10 ){
@@ -75,7 +74,7 @@ Player.prototype.getLastFrameScore = function(currentFrame){
 	var that = this;
 
 	var message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 1"; //prepare the message
-	this.frames[currentFrame].ball1 = parseInt(prompt(message));
+	this.frames[currentFrame].ball1 = parseInt(prompt(message),10);
 
 	//check if it is strike
 	if(this.frames[currentFrame].ball1 === 10){
@@ -83,9 +82,9 @@ Player.prototype.getLastFrameScore = function(currentFrame){
 		console.log('STRIKE + 2 Bonus Shots');
 		//get two bonus balls
 		message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 2 - Bonus"; //prepare the message
-		that.frames[currentFrame].ball2 = parseInt(prompt(message));
+		that.frames[currentFrame].ball2 = parseInt(prompt(message),10);
 		message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 3 - Bonus"; //prepare the message
-		that.frames[currentFrame].ball3 = parseInt(prompt(message));
+		that.frames[currentFrame].ball3 = parseInt(prompt(message),10);
 
 		//check for striking out condition
 		if( that.frames[currentFrame].ball2 === 10 && that.frames[currentFrame].ball1 === 10 ){
@@ -97,7 +96,7 @@ Player.prototype.getLastFrameScore = function(currentFrame){
 	}else{
 
 		message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 2"; //prepare the message
-		that.frames[currentFrame].ball2 = parseInt(prompt(message));
+		that.frames[currentFrame].ball2 = parseInt(prompt(message),10);
 
 		//check if its a spare
 		if( (that.frames[currentFrame].ball1 + that.frames[currentFrame].ball2) === 10 ){
@@ -105,7 +104,7 @@ Player.prototype.getLastFrameScore = function(currentFrame){
 			// if it is spare give a bonus of one extra ball
 			console.log('SPARE');
 			message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 3 - Bonus"; //prepare the message
-			that.frames[currentFrame].ball3 = parseInt(prompt(message));
+			that.frames[currentFrame].ball3 = parseInt(prompt(message),10);
 
 		}else{
 			
@@ -205,7 +204,6 @@ Frame.prototype.lastFrame = function(){
 //GAME CLASS
 function Game(players){
 
-	var that = this;
 	this.players = players; //an array of players
 	this.currentFrame = 0; //to keep track of the current frame
 	this.scoreBoard = []; // and array to hold the scoreboard
@@ -228,7 +226,7 @@ Game.prototype.start = function(){
 		}
 
 		//iterate the current frame
-		that.currentFrame++
+		that.currentFrame++;
 		that.start(); //loop
 
 	}else{
@@ -236,14 +234,14 @@ Game.prototype.start = function(){
 		//its the last frame
 		//run the special getter function
 		//loop through and get the score for each player and each round
-		for(var i = 0; i < this.players.length; i++){
+		for(var j = 0; j < this.players.length; j++){
 
-			that.players[i].frames[that.currentFrame].lastFrame(); // sets is Last Frame
-			that.players[i].getLastFrameScore(that.currentFrame); //get the score
-			that.players[i].calculateScore(); // calculate the score
+			that.players[j].frames[that.currentFrame].lastFrame(); // sets is Last Frame
+			that.players[j].getLastFrameScore(that.currentFrame); //get the score
+			that.players[j].calculateScore(); // calculate the score
 
 			//check for perfect game condition
-			if(that.players[i].score === 300){
+			if(that.players[j].score === 300){
 
 				console.log('PERFECT GAME');
 
@@ -289,6 +287,7 @@ Game.prototype.printScoreBoard = function(){
 	}
 
 	//use console.table for nice presentation of the score board
+	console.log(this.scoreBoard);
 	console.table(this.scoreBoard);
 
 };
@@ -298,12 +297,12 @@ Game.prototype.printScoreBoard = function(){
 window.onload = function(){
 
 	var players = []; //array to hold player objects
-	var numberOfPlayers = parseInt(prompt('Please Enter the Number Players')); //get the number of players
+	var numberOfPlayers = parseInt(prompt('Please Enter the Number Players'),10); //get the number of players
 
 	//check if itsa valid entry
 	if(numberOfPlayers > 6 || numberOfPlayers <= 0 || isNaN(numberOfPlayers)){
 
-		numberOfPlayers = parseInt(prompt('Max number of players is 6, Please Enter a Valid Number Between 1 and 6'));
+		numberOfPlayers = parseInt(prompt('Max number of players is 6, Please Enter a Valid Number Between 1 and 6'),10);
 
 	}
 
