@@ -19,7 +19,7 @@ function Player(name){
 
 			//lastframe
 			that.frames[i] = new Frame();
-			that.frames[i].lastFrame();
+			that.frames[i].setLastFrame();
 
 		}
 
@@ -71,8 +71,8 @@ Player.prototype.getScore = function(currentFrame){
 	if ( sum > 10 || isNaN(sum) ){
 
 		console.log('Inavlid Entry');
-		that.frames[currentFrame].ball1 = 0;
-		that.frames[currentFrame].ball2 = 0;
+		//reset the values
+		that.frames[currentFrame].reset();
 		//repeat the process
 		that.getScore(currentFrame);
 	}
@@ -137,8 +137,8 @@ Player.prototype.getLastFrameScore = function(currentFrame){
 	if ( sum > 30 || isNaN(sum) ){
 
 		console.log('Inavlid Entry');
-		that.frames[currentFrame].ball1 = 0;
-		that.frames[currentFrame].ball2 = 0;
+		//reset the values
+		that.frames[currentFrame].reset();
 		//repeat the process
 		that.getScore(currentFrame);
 	}
@@ -223,6 +223,23 @@ Frame.prototype.setLastFrame = function(){
 
 };
 
+//reset function for when the entered value is inavlid
+Frame.prototype.reset = function(){
+
+	var that = this;
+	this.ball1 = 0;
+	this.ball2 = 0;
+	//check if 
+	if (this.isLastFrame){
+
+		that.ball3 = 0;
+
+	}
+	this.isStrike = false;
+	this.isSpare = false;
+
+};
+
 //GAME CLASS
 function Game(players){
 
@@ -276,6 +293,7 @@ Game.prototype.start = function(){
 	}
 };
 
+//finish method - will print the score board when finished
 Game.prototype.finish = function(){
 
 	//game finished - print the score board
@@ -311,6 +329,7 @@ Game.prototype.printScoreBoard = function(){
 
 	//use console.table for nice presentation of the score board
 	console.log(this.scoreBoard);
+	
 	console.table(this.scoreBoard);
 
 };
