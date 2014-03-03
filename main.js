@@ -102,8 +102,10 @@ Player.prototype.getLastFrameScore = function(currentFrame){
 		//check if its a spare
 		if( (that.frames[currentFrame].ball1 + that.frames[currentFrame].ball2) === 10 ){
 
-			//that.frames[currentFrame].isSpare = true;
+			// if it is spare give a bonus of one extra ball
 			console.log('SPARE');
+			message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 3 - Bonus"; //prepare the message
+			that.frames[currentFrame].ball3 = parseInt(prompt(message));
 
 		}else{
 			
