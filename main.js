@@ -56,11 +56,7 @@ Player.prototype.getScore = function(currentFrame){
 			
 			//its neighter a spare nor a strike
 			//you can check for a miss
-			if ( (that.frames[currentFrame].ball1 + that.frames[currentFrame].ball2) === 0){
-
-				console.log('Missed both balls - OPEN FRAME');
-
-			}
+			console.log('OPEN FRAME');
 
 		}
 
@@ -85,7 +81,7 @@ Player.prototype.getLastFrameScore = function(currentFrame){
 	var that = this;
 
 	var message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 1"; //prepare the message
-	this.frames[currentFrame].ball1 = parseInt(prompt(message),10);
+	this.frames[currentFrame].ball1 = parseInt(prompt(message),10); //get the input
 
 	//check if it is strike
 	if (this.frames[currentFrame].ball1 === 10){
@@ -93,22 +89,22 @@ Player.prototype.getLastFrameScore = function(currentFrame){
 		console.log('STRIKE + 2 Bonus Shots');
 		//get two bonus balls
 		message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 2 - Bonus"; //prepare the message
-		that.frames[currentFrame].ball2 = parseInt(prompt(message), 10);
+		that.frames[currentFrame].ball2 = parseInt(prompt(message), 10); //get the input
 		
 		message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 3 - Bonus"; //prepare the message
-		that.frames[currentFrame].ball3 = parseInt(prompt(message), 10);
+		that.frames[currentFrame].ball3 = parseInt(prompt(message), 10); //get the input
 
 		//check for striking out condition
 		if ( that.frames[currentFrame].ball2 === 10 && that.frames[currentFrame].ball1 === 10 ){
 
-			console.log('Striking OUT');
+			console.log('STRIKING OUT');
 
 		}
 
 	} else {
 
 		message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 2"; //prepare the message
-		that.frames[currentFrame].ball2 = parseInt(prompt(message),10);
+		that.frames[currentFrame].ball2 = parseInt(prompt(message),10); //get the input
 
 		//check if its a spare
 		if ( (that.frames[currentFrame].ball1 + that.frames[currentFrame].ball2) === 10 ){
@@ -116,17 +112,13 @@ Player.prototype.getLastFrameScore = function(currentFrame){
 			// if it is spare give a bonus of one extra ball
 			console.log('SPARE');
 			message = this.name + "'s turn - Frame " + (currentFrame + 1) + " - Ball 3 - Bonus"; //prepare the message
-			that.frames[currentFrame].ball3 = parseInt(prompt(message),10);
+			that.frames[currentFrame].ball3 = parseInt(prompt(message),10); //get the input
 
 		} else {
 			
 			//its neighter a spare nor a strike
 			//you can check for a miss
-			if ( (that.frames[currentFrame].ball1 + that.frames[currentFrame].ball2) === 0){
-
-				console.log('OPEN FRAME');
-
-			}
+			console.log('OPEN FRAME');
 
 		}
 
@@ -283,7 +275,7 @@ Game.prototype.start = function(){
 			//check for perfect game condition
 			if (that.players[j].score === 300){
 
-				console.log('PERFECT GAME');
+				console.log(that.players[j] + ' - PERFECT GAME');
 
 			}
 
@@ -312,6 +304,7 @@ Game.prototype.printScoreBoard = function(){
 		//create the slot in the scoreboard
 		//each slot is a an object that has name and scores for each frame and the final score
 		that.scoreBoard[i] = {
+
 			name: that.players[i].name,
 			frame_1: that.players[i].frames[0].score,
 			frame_2: that.players[i].frames[1].score,
@@ -324,13 +317,17 @@ Game.prototype.printScoreBoard = function(){
 			frame_9: that.players[i].frames[8].score,
 			frame_10: that.players[i].frames[9].score,
 			score: that.players[i].score
+			
 		};
 	}
 
-	//use console.table for nice presentation of the score board
 	console.log(this.scoreBoard);
 	
-	console.table(this.scoreBoard);
+	//use console.table when available for nice presentation of the score board
+	if(console.table){
+		console.table(this.scoreBoard);
+	}
+	
 
 };
 
@@ -342,9 +339,10 @@ window.onload = function(){
 	var numberOfPlayers = parseInt(prompt('Please Enter the Number Players'), 10); //get the number of players
 
 	//check if itsa valid entry
-	if (numberOfPlayers > 6 || numberOfPlayers <= 0 || isNaN(numberOfPlayers)){
+	if ( numberOfPlayers > 6 || numberOfPlayers <= 0 || isNaN(numberOfPlayers) ){
 
-		numberOfPlayers = parseInt(prompt('Max number of players is 6, Please Enter a Valid Number Between 1 and 6'), 10);
+		var message = 'Max number of players is 6, Please Enter a Valid Number Between 1 and 6';
+		numberOfPlayers = parseInt(prompt(message), 10);
 
 	}
 
